@@ -137,24 +137,11 @@ class BackgroundService {
     }
 
     showWelcomeNotification() {
-        if (chrome.notifications) {
-            chrome.notifications.create({
-                type: "basic",
-                title: "Steam Extension установлено!",
-                message:
-                    "Расширение готово к работе. Откройте страницу профиля Steam для начала работы.",
-            });
-        }
+        // Уведомления отключены - нет иконок
     }
 
     showUpdateNotification(previousVersion) {
-        if (chrome.notifications) {
-            chrome.notifications.create({
-                type: "basic",
-                title: "Steam Extension обновлено!",
-                message: `Обновлено с версии ${previousVersion} до 1.0.0`,
-            });
-        }
+        // Уведомления отключены - нет иконок
     }
 }
 
