@@ -26,17 +26,15 @@ class SteamContentScript {
         // Ждем загрузки страницы и добавляем кнопку
         if (document.readyState === "loading") {
             document.addEventListener("DOMContentLoaded", () => {
-                // Добавляем небольшую задержку для динамического контента
-                setTimeout(() => this.addNicknameButton(), 1000);
+                this.addNicknameButton();
             });
         } else {
-            // Добавляем небольшую задержку для динамического контента
-            setTimeout(() => this.addNicknameButton(), 1000);
+            this.addNicknameButton();
         }
 
         // Также пытаемся добавить кнопку через интервалы для динамического контента
         let attempts = 0;
-        const maxAttempts = 10;
+        const maxAttempts = 5;
         const interval = setInterval(() => {
             attempts++;
 
@@ -49,7 +47,7 @@ class SteamContentScript {
             if (attempts >= maxAttempts) {
                 clearInterval(interval);
             }
-        }, 2000);
+        }, 1000);
     }
 
     addNicknameButton() {
@@ -63,7 +61,27 @@ class SteamContentScript {
             return;
         }
 
-        // Находим подходящее место для кнопки (рядом с именем пользователя)
+        // Ищем контейнер profile_header_actions
+        const actionsContainer = document.querySelector(
+            ".profile_header_actions"
+        );
+        if (actionsContainer) {
+            // Создаем кнопку
+            const button = this.createNicknameButton();
+
+            // Устанавливаем абсолютное позиционирование
+            button.style.position = "absolute";
+            button.style.left = "0";
+            button.style.top = "calc(100% + 4px)";
+            button.style.zIndex = "1000";
+
+            // Добавляем кнопку в контейнер действий
+            actionsContainer.style.position = "relative";
+            actionsContainer.appendChild(button);
+            return;
+        }
+
+        // Fallback: ищем другие подходящие места
         const profileNameElement = this.findProfileNameElement();
         if (!profileNameElement) {
             // Пробуем добавить кнопку в начало body как fallback
@@ -122,14 +140,36 @@ class SteamContentScript {
         return null;
     }
 
+    getLanguage() {
+        const htmlLang =
+            document.documentElement.lang ||
+            document.documentElement.getAttribute("lang");
+        return htmlLang && htmlLang.startsWith("ru") ? "ru" : "en";
+    }
+
     createNicknameButton() {
-        const button = document.createElement("button");
-        button.className = "steam-extension-nickname-btn";
-        button.innerHTML = "Add nickname";
-        button.title = "Добавить никнейм к профилю";
+        const language = this.getLanguage();
+        const buttonText = language === "ru" ? "Добавить ник" : "Add Nickname";
+
+        const button = document.createElement("a");
+        button.className =
+            "btn_profile_action btn_medium steam-extension-nickname-btn";
+        button.href = "javascript:void(0);";
+
+        const span = document.createElement("span");
+        span.innerHTML = `<img src="${chrome.runtime.getURL(
+            "assets/edit-icon.png"
+        )}" style="width: 16px; height: 16px; margin-right: 6px; vertical-align: middle;">${buttonText}`;
+
+        button.appendChild(span);
+        button.title =
+            language === "ru"
+                ? "Добавить никнейм к профилю"
+                : "Add nickname to profile";
 
         // Добавляем обработчик клика
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
             this.handleNicknameClick();
         });
 

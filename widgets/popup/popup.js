@@ -22,13 +22,12 @@ class PopupController {
             });
 
             if (this.isSteamPage(tab.url)) {
-                this.setStatus("active", "Активен на профиле Steam");
+                this.setStatus("active", "Active on Steam profile");
             } else {
-                this.setStatus("inactive", "Откройте профиль Steam");
+                this.setStatus("inactive", "Open Steam profile");
             }
         } catch (error) {
-            console.error("Ошибка при обновлении статуса:", error);
-            this.setStatus("error", "Ошибка");
+            this.setStatus("error", "Error");
         }
     }
 

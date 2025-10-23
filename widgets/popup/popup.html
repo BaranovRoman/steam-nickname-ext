@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +9,34 @@
 <body>
   <div class="popup-container">
     <header class="popup-header">
-      <h1>Steam Extension</h1>
+      <h1 class="popup-title">Steam Extension</h1>
+      <div class="status-indicator" id="statusIndicator">
+        <span class="status-dot"></span>
+        <span class="status-text" id="statusText">Inactive</span>
+      </div>
     </header>
 
     <main class="popup-content">
-      <div class="status-section">
-        <div class="status-indicator" id="statusIndicator">
-          <span class="status-dot"></span>
-          <span class="status-text" id="statusText">Неактивен</span>
-        </div>
+      <div class="description">
+        <p>Add nickname button to Steam profiles</p>
       </div>
 
+      <div class="links-section">
+        <div class="link-item">
+          <span class="link-label">Suggestions & Support:</span>
+          <a href="https://t.me/ramzes2045" class="link" target="_blank">@ramzes2045</a>
+        </div>
+
+        <div class="link-item">
+          <span class="link-label">Support Author:</span>
+          <a href="https://www.tbank.ru/cf/9CNMLX4vb3X" class="link" target="_blank">Donate</a>
+        </div>
+      </div>
     </main>
+
+    <footer class="popup-footer">
+      <small>v1.0.0</small>
+    </footer>
   </div>
 
   <script src="popup.js"></script>

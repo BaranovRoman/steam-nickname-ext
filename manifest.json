@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Steam Extension",
+    "name": "Steam Nickname Helper",
     "version": "1.0.0",
-    "description": "Расширение для работы со Steam",
+    "description": "Add nickname button to Steam profiles for easy nickname management",
     "permissions": ["activeTab", "storage", "tabs"],
     "host_permissions": [
         "https://steamcommunity.com/id/*",
@@ -23,7 +23,7 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["shared/injection.js"],
+            "resources": ["shared/injection.js", "assets/edit-icon.png"],
             "matches": ["https://steamcommunity.com/*"]
         }
     ],
